@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 
 class MyHomePage extends StatefulWidget {
-  final List<String> allergies;
+  final String comp;
 
   const MyHomePage(
     Key key,
-    this.allergies,
+    this.comp,
   ) : super(key: key);
 
   @override
@@ -22,6 +22,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(),
+      body: Container(
+        child: Text(widget.comp),
+      ),
       
       //body: ListView(),
      
