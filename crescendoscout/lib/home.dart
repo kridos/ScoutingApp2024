@@ -1,3 +1,4 @@
+import 'package:crescendoscout/viewdata.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 
@@ -23,7 +24,57 @@ class _MyHomePageState extends State<MyHomePage> {
       extendBody: true,
       appBar: AppBar(),
       body: Container(
-        child: Text(widget.comp),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.blue // Grey when not pressed
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    
+                  });
+                },
+                child: Text(
+                  "Scout New Team",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.blue, // Grey when not pressed
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ViewData(),
+                        ),
+                      );
+                  });
+                },
+                child: Text(
+                  "View Team Data",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       
       //body: ListView(),

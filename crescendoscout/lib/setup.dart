@@ -75,7 +75,8 @@ class SetupState extends State<Setup> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyHomePage(UniqueKey(),competition),
+                          builder: (context) =>
+                              MyHomePage(UniqueKey(), competition),
                         ),
                       );
                     } else {
@@ -208,58 +209,54 @@ class _ToggleWidgetState extends State<ToggleWidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: _isButtonOnePressed
-                        ? Colors.blue
-                        : Colors.grey, // Grey when not pressed
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isButtonOnePressed = true;
-                        _isButtonTwoPressed = false;
-                        widget.updateCompetition(firstOption);
-                      });
-                    },
-                    child: Text(
-                      firstOption,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: _isButtonOnePressed
+                    ? Colors.blue
+                    : Colors.grey, // Grey when not pressed
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isButtonOnePressed = true;
+                    _isButtonTwoPressed = false;
+                    widget.updateCompetition(firstOption);
+                  });
+                },
+                child: Text(
+                  firstOption,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
                 ),
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: _isButtonTwoPressed
-                        ? Colors.blue
-                        : Colors.grey, // Grey when not pressed
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isButtonOnePressed = false;
-                        _isButtonTwoPressed = true;
-                        widget.updateCompetition(secondOption);
-                      });
-                    },
-                    child: Text(
-                      secondOption,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: _isButtonTwoPressed
+                    ? Colors.blue
+                    : Colors.grey, // Grey when not pressed
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isButtonOnePressed = false;
+                    _isButtonTwoPressed = true;
+                    widget.updateCompetition(secondOption);
+                  });
+                },
+                child: Text(
+                  secondOption,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            )
           ],
         ),
       ),
