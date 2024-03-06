@@ -1,3 +1,4 @@
+import 'package:crescendoscout/adddata.dart';
 import 'package:crescendoscout/viewdata.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
@@ -37,7 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TextButton(
                 onPressed: () {
                   setState(() {
-                    
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AddData(),
+                        ),
+                      );
                   });
                 },
                 child: Text(
