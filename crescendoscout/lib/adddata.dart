@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:developer';
-
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/widgets.dart';
 
 class AddData extends StatefulWidget {
@@ -26,6 +27,8 @@ class AddData extends StatefulWidget {
 //Can they score trap?
 
 class _AddDataState extends State<AddData> {
+  String intake = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,12 +39,35 @@ class _AddDataState extends State<AddData> {
             children: <Widget>[
               Text("Robot Team Number"),
               TextFormField(
+                maxLength: 5,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
-                  labelText: 'Enter your username',
+                  labelText: 'Enter the Team Number',
                 ),
               ),
-              Text("Robot Team Name")
+              Text("Robot Team Name"),
+              TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Enter the Team Name',
+                ),
+              ),
+              Text("Where do they intake from?"),
+              DropdownSearch<String>(
+                items: const [
+                  'Ground (can Intake from Source and Ground)',
+                  'Source only Intake'
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    intake = value.toString();
+                  });
+                },
+              ),
             ],
           ),
         )
