@@ -59,7 +59,7 @@ class _SendDataState extends State<SendData> {
                       final prefs = await SharedPreferences.getInstance();
                       final storedList = prefs.getStringList(selectedItem);
                       if (storedList != null) {
-                        combinedString = storedList.join(" ");
+                        combinedString = storedList.join(",");
 
                         setState(() {
                           showQrCode = true;

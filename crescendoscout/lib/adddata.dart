@@ -474,6 +474,27 @@ class _AddDataState extends State<AddData> {
                     log("Returned Null");
                   }
 
+                  String autoAmpNotesText = autoAmpNotes.text;
+                  String autoSpeakerNotesText = autoSpeakerNotes.text;
+                  String teleOpScoredNotesText = teleOpScoredNotes.text;
+                  String approxClimbTimeText = approxClimbTime.text;
+
+                  if(autoAmpNotesText == ""){
+                    autoAmpNotesText = "0";
+                  }
+
+                  if(autoSpeakerNotesText == ""){
+                    autoSpeakerNotesText = "0";
+                  }
+
+                  if(teleOpScoredNotesText == ""){
+                    teleOpScoredNotesText = "0";
+                  }
+
+                  if(approxClimbTimeText == ""){
+                    approxClimbTimeText = "0";
+                  }
+
                   List<String> teamStats = [
                     teamNumberController.text,
                     teamNameController.text,
@@ -481,14 +502,14 @@ class _AddDataState extends State<AddData> {
                     outtake,
                     autoPrefStart,
                     outtakeAuto,
-                    autoAmpNotes.text,
-                    autoSpeakerNotes.text,
+                    autoAmpNotesText,
+                    autoSpeakerNotesText,
                     typeOfStrat,
                     primaryTeleOpScoreLocation,
-                    teleOpScoredNotes.text,
+                    teleOpScoredNotesText,
                     whereHumanPlayer,
                     canClimb,
-                    approxClimbTime.text,
+                    approxClimbTimeText,
                     canHarmonize,
                     canTrap
                   ];
