@@ -492,7 +492,7 @@ class _AddDataState extends State<AddData> {
                   }
 
                   if(approxClimbTimeText == ""){
-                    approxClimbTimeText = "0";
+                    approxClimbTimeText = "N/A";
                   }
 
                   List<String> teamStats = [
