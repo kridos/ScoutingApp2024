@@ -8,7 +8,8 @@ class ViewData extends StatefulWidget {
 }
 
 class _ViewDataState extends State<ViewData> {
-  List<String> myList = []; // Initialize an empty list
+  List<String> myList = [];
+  bool isLoaded = false;
 
   @override
   void initState() {
@@ -22,7 +23,10 @@ class _ViewDataState extends State<ViewData> {
     if (storedList != null) {
       setState(() {
         myList = storedList;
+        isLoaded = true;
       });
+    }else{
+      log("BEEELLLOOOWWW");
     }
   }
 
@@ -31,16 +35,18 @@ class _ViewDataState extends State<ViewData> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(),
-      body: Container(
-          child: ListView.builder(
-        itemCount: myList.length,
-        itemBuilder: (context, index) {
-          final String item = myList[index];
-          return ListTile(
-            title: Text(item),
-          );
-        },
-      )),
+      body: isLoaded
+          ? Container(
+              child: ListView.builder(
+              itemCount: myList.length,
+              itemBuilder: (context, index) {
+                final String item = myList[index];
+                return ListTile(
+                  title: Text(item),
+                );
+              },
+            ))
+          : Center(child: CircularProgressIndicator()),
 
       //body: ListView(),
     );

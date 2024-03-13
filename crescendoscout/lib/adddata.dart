@@ -36,17 +36,16 @@ class _AddDataState extends State<AddData> {
   TextEditingController teleOpScoredNotes = TextEditingController();
   TextEditingController approxClimbTime = TextEditingController();
 
-  String intake = "";
-  String outtake = "";
-  String autoPrefStart = "";
-  String outtakeAuto = "";
-  String typeOfStrat = "";
-  String primaryTeleOpScoreLocation = "";
-  String whereHumanPlayer = "";
-  String canClimb = "";
-  String canHarmonize = "";
-  String canTrap = "";
-  int currentRadioButton = 0;
+  String intake = "Source Only";
+  String outtake = "Amp";
+  String autoPrefStart = "Close to Amp";
+  String outtakeAuto = "Amp";
+  String typeOfStrat = "Offensive";
+  String primaryTeleOpScoreLocation = "Amp";
+  String whereHumanPlayer = "Amp";
+  String canClimb = "Yes";
+  String canHarmonize = "Yes";
+  String canTrap = "Yes";
 
   Future<void> saveDataString(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
@@ -106,10 +105,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => intake = "Source Only"),
+                    value: "Source Only",
+                    groupValue: intake, // Assign the string value here
+                    onChanged: (value) => setState(() => intake = value ?? ""),
                   ),
                   Text('Source Only'),
                 ],
@@ -118,10 +116,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => intake = "Ground (Source and Ground)"),
+                    value: "Ground (Source and Ground)",
+                    groupValue: intake, // Assign the string value here
+                    onChanged: (value) => setState(() => intake = value ?? ""),
                   ),
                   Text('Ground (Source and Ground)'),
                 ],
@@ -132,9 +129,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => outtake = "Amp"),
+                    value: "Amp",
+                    groupValue: outtake, // Assign the string value here
+                    onChanged: (value) => setState(() => outtake = value ?? ""),
                   ),
                   Text('Amp'),
                 ],
@@ -143,9 +140,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => outtake = "Speaker"),
+                    value: "Speaker",
+                    groupValue: outtake, // Assign the string value here
+                    onChanged: (value) => setState(() => outtake = value ?? ""),
                   ),
                   Text('Speaker'),
                 ],
@@ -154,10 +151,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 2,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => outtake = "Both (Amp and Speaker)"),
+                    value: "Both (Speaker and Amp)",
+                    groupValue: outtake, // Assign the string value here
+                    onChanged: (value) => setState(() => outtake = value ?? ""),
                   ),
                   Text('Both (Speaker and Amp)'),
                 ],
@@ -168,10 +164,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => autoPrefStart = "Close to Amp"),
+                    value: "Close to Amp",
+                    groupValue: autoPrefStart, // Assign the string value here
+                    onChanged: (value) => setState(() => autoPrefStart = value ?? ""),
                   ),
                   Text('Close to Amp'),
                 ],
@@ -180,10 +175,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => autoPrefStart = "In front of speaker"),
+                    value: "In front of speaker",
+                    groupValue: autoPrefStart, // Assign the string value here
+                    onChanged: (value) => setState(() => autoPrefStart = value ?? ""),
                   ),
                   Text('In front of speaker'),
                 ],
@@ -192,10 +186,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 2,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => autoPrefStart = "Away from the Amp"),
+                    value: "Away from the Amp",
+                    groupValue: autoPrefStart, // Assign the string value here
+                    onChanged: (value) => setState(() => autoPrefStart = value ?? ""),
                   ),
                   Text('Away from the Amp'),
                 ],
@@ -206,9 +199,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => outtakeAuto = "Amp"),
+                    value: "Amp",
+                    groupValue: outtakeAuto, // Assign the string value here
+                    onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
                   ),
                   Text('Amp'),
                 ],
@@ -217,10 +210,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => outtakeAuto = "Speaker"),
+                    value: "Speaker",
+                    groupValue: outtakeAuto, // Assign the string value here
+                    onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
                   ),
                   Text('Speaker'),
                 ],
@@ -229,10 +221,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 2,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => outtakeAuto = "Both (Speaker and Amp)"),
+                    value: "Both (Speaker and Amp)",
+                    groupValue: outtakeAuto, // Assign the string value here
+                    onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
                   ),
                   Text('Both (Speaker and Amp)'),
                 ],
@@ -251,6 +242,7 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Amp Notes in Auto',
                 ),
+                controller: autoAmpNotes,
               ),
 
               //Max Auto Notes in Speaker
@@ -266,6 +258,7 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Speaker Notes in Auto',
                 ),
+                controller: autoSpeakerNotes,
               ),
 
               //Offensive or Defensive Play
@@ -274,10 +267,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => typeOfStrat = "Offensive"),
+                    value: "Offensive",
+                    groupValue: typeOfStrat, // Assign the string value here
+                    onChanged: (value) => setState(() => typeOfStrat = value ?? ""),
                   ),
                   Text('Offensive'),
                 ],
@@ -286,10 +278,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => typeOfStrat = "Defensive"),
+                    value: "Defensive",
+                    groupValue: typeOfStrat, // Assign the string value here
+                    onChanged: (value) => setState(() => typeOfStrat = value ?? ""),
                   ),
                   Text('Defensive'),
                 ],
@@ -300,10 +291,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => primaryTeleOpScoreLocation = "Amp"),
+                    value: "Amp",
+                    groupValue: primaryTeleOpScoreLocation, // Assign the string value here
+                    onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
                   ),
                   Text('Amp'),
                 ],
@@ -312,10 +302,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => primaryTeleOpScoreLocation = "Speaker"),
+                    value: "Speaker",
+                    groupValue: primaryTeleOpScoreLocation, // Assign the string value here
+                    onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
                   ),
                   Text('Speaker'),
                 ],
@@ -324,10 +313,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 2,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => primaryTeleOpScoreLocation = "Split"),
+                    value: "Split",
+                    groupValue: primaryTeleOpScoreLocation, // Assign the string value here
+                    onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
                   ),
                   Text('Split'),
                 ],
@@ -345,6 +333,7 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Notes Scored in TeleOp',
                 ),
+                controller: teleOpScoredNotes,
               ),
 
               //Where Human Player
@@ -352,10 +341,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => whereHumanPlayer = "Amp"),
+                    value: "Amp",
+                    groupValue: whereHumanPlayer, // Assign the string value here
+                    onChanged: (value) => setState(() => whereHumanPlayer = value ?? ""),
                   ),
                   Text('Amp'),
                 ],
@@ -364,10 +352,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => whereHumanPlayer = "Source"),
+                    value: "Source",
+                    groupValue: whereHumanPlayer, // Assign the string value here
+                    onChanged: (value) => setState(() => whereHumanPlayer = value ?? ""),
                   ),
                   Text('Source'),
                 ],
@@ -376,10 +363,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 2,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) =>
-                        setState(() => whereHumanPlayer = "Any"),
+                    value: "Any",
+                    groupValue: whereHumanPlayer, // Assign the string value here
+                    onChanged: (value) => setState(() => whereHumanPlayer = value ?? ""),
                   ),
                   Text('Any'),
                 ],
@@ -390,9 +376,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => canClimb = "Yes"),
+                    value: "Yes",
+                    groupValue: canClimb, // Assign the string value here
+                    onChanged: (value) => setState(() => canClimb = value ?? ""),
                   ),
                   Text('Yes'),
                 ],
@@ -401,9 +387,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => canClimb = "No"),
+                    value: "No",
+                    groupValue: canClimb, // Assign the string value here
+                    onChanged: (value) => setState(() => canClimb = value ?? ""),
                   ),
                   Text('No'),
                 ],
@@ -422,6 +408,7 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Approx Climb Time',
                 ),
+                controller: approxClimbTime,
               ),
 
               //Can Harmonize
@@ -429,9 +416,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => canHarmonize = "Yes"),
+                    value: "Yes",
+                    groupValue: canHarmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => canHarmonize = value ?? ""),
                   ),
                   Text('Yes'),
                 ],
@@ -440,9 +427,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => canHarmonize = "No"),
+                    value: "No",
+                    groupValue: canHarmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => canHarmonize = value ?? ""),
                   ),
                   Text('No'),
                 ],
@@ -453,9 +440,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 0,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => canTrap = "Yes"),
+                    value: "Yes",
+                    groupValue: canTrap, // Assign the string value here
+                    onChanged: (value) => setState(() => canTrap = value ?? ""),
                   ),
                   Text('Yes'),
                 ],
@@ -464,9 +451,9 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: 1,
-                    groupValue: currentRadioButton,
-                    onChanged: (value) => setState(() => canTrap = "No"),
+                    value: "No",
+                    groupValue: canTrap, // Assign the string value here
+                    onChanged: (value) => setState(() => canTrap = value ?? ""),
                   ),
                   Text('No'),
                 ],
@@ -479,17 +466,34 @@ class _AddDataState extends State<AddData> {
 
                   if (tempTeamList != null) {
                     tempTeamList.add(teamNumberController.text);
-                    saveDataStringList("team", tempTeamList);
+                    saveDataStringList("teams", tempTeamList);
                   } else {
                     List<String> teamList = [teamNumberController.text];
-                    saveDataStringList("team", teamList);
+                    saveDataStringList("teams", teamList);
                     // Handle the case where data retrieval failed (e.g., print an error message)
                     log("Returned Null");
                   }
 
-                  List<String> teamStats = [teamNumberController.text,teamNameController.text,intake, outtake, autoPrefStart,outtakeAuto,autoAmpNotes.text,autoSpeakerNotes.text,typeOfStrat,primaryTeleOpScoreLocation,teleOpScoredNotes.text,whereHumanPlayer,canClimb,approxClimbTime.text,canHarmonize,canTrap];
+                  List<String> teamStats = [
+                    teamNumberController.text,
+                    teamNameController.text,
+                    intake,
+                    outtake,
+                    autoPrefStart,
+                    outtakeAuto,
+                    autoAmpNotes.text,
+                    autoSpeakerNotes.text,
+                    typeOfStrat,
+                    primaryTeleOpScoreLocation,
+                    teleOpScoredNotes.text,
+                    whereHumanPlayer,
+                    canClimb,
+                    approxClimbTime.text,
+                    canHarmonize,
+                    canTrap
+                  ];
+                  log(teamStats.toString());
                   saveDataStringList(teamNumberController.text, teamStats);
-
 
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context);

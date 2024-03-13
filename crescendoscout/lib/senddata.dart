@@ -13,6 +13,7 @@ class _SendDataState extends State<SendData> {
   String selectedItem = "";
   String combinedString = "";
   bool showQrCode = false;
+  bool isLoaded = false;
   QrCode qrCode =
       QrCode(4, QrErrorCorrectLevel.L); // Initialize with default data
 
@@ -30,6 +31,7 @@ class _SendDataState extends State<SendData> {
     if (storedList != null) {
       setState(() {
         myList = storedList;
+        isLoaded = true;
       });
     }
   }
@@ -39,44 +41,46 @@ class _SendDataState extends State<SendData> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(),
-      body: Column(children: <Widget>[
-        myList.isNotEmpty
-            ? DropdownSearch<String>(
-                items: myList, // Use retrieved list
-                onChanged: (value) {
-                  setState(() {
-                    selectedItem = value.toString();
-                  });
-                },
-              )
-            : Text('Loading Teams...'),
-        ElevatedButton(
-            onPressed: () async {
-              try {
-                final prefs = await SharedPreferences.getInstance();
-                final storedList = prefs.getStringList(selectedItem);
-                if (storedList != null) {
-                  combinedString = storedList.join(" ");
+      body: isLoaded
+          ? Column(children: <Widget>[
+              myList.isNotEmpty
+                  ? DropdownSearch<String>(
+                      items: myList, // Use retrieved list
+                      onChanged: (value) {
+                        setState(() {
+                          selectedItem = value.toString();
+                        });
+                      },
+                    )
+                  : Text('Loading Teams...'),
+              ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final prefs = await SharedPreferences.getInstance();
+                      final storedList = prefs.getStringList(selectedItem);
+                      if (storedList != null) {
+                        combinedString = storedList.join(" ");
 
-                  setState(() {
-                    showQrCode = true;
-                  });
-                } else {
-                  log("Error: No data found for selected item.");
-                }
-              } catch (error) {
-                log("Error generating QR code: ${error.toString()}");
-              }
-            },
-            child: Text("Generate QR Code")),
-        Visibility(
-          visible: showQrCode,
-          child: QrImageView(
-            data: combinedString,
-            version: QrVersions.auto,
-          ), // Display QR code when visible
-        ),
-      ]),
+                        setState(() {
+                          showQrCode = true;
+                        });
+                      } else {
+                        log("Error: No data found for selected item.");
+                      }
+                    } catch (error) {
+                      log("Error generating QR code: ${error.toString()}");
+                    }
+                  },
+                  child: Text("Generate QR Code")),
+              Visibility(
+                visible: showQrCode,
+                child: QrImageView(
+                  data: combinedString,
+                  version: QrVersions.auto,
+                ), // Display QR code when visible
+              ),
+            ])
+          : Center(child: CircularProgressIndicator()),
 
       //body: ListView(),
     );
