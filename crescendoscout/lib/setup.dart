@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'dart:developer';
 import 'package:crescendoscout/home.dart';
+import 'package:crescendoscout/PitMatchChoicePage.dart';
 
 class Setup extends StatefulWidget {
   @override
@@ -76,15 +77,15 @@ class SetupState extends State<Setup> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              MyHomePage(UniqueKey(), competition),
+                              PitMatchChoice(UniqueKey(), UniqueKey(), competition),
                         ),
                       );
                     } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyHomePage(
-                              UniqueKey(),
+                          builder: (context) => PitMatchChoice(
+                              UniqueKey(), UniqueKey(),
                               selectedItem.contains("Week")
                                   ? "$selectedItem - $competition"
                                   : selectedItem),
