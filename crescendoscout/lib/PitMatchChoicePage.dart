@@ -1,9 +1,7 @@
-import 'dart:js_interop_unsafe';
 
 import 'package:crescendoscout/home.dart';
 import 'package:crescendoscout/MatchScoutingPage.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PitMatchChoice extends StatefulWidget {

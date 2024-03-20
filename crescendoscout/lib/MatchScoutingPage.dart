@@ -3,7 +3,6 @@ import 'package:crescendoscout/sendMatchData.dart';
 import 'package:crescendoscout/addMatchData.dart';
 import 'package:crescendoscout/viewMatchData.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MatchScoutingPage extends StatefulWidget {
