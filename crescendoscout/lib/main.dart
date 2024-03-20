@@ -98,8 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                final testBarcode = '007430015859';
-
+                
                 // final results = await OpenFoodFacts.searchProducts(query: 'apple juice');
 
                 // for (Product product in results) {
