@@ -143,7 +143,7 @@ class _MatchScoutingPageState extends State<MatchScoutingPage> {
                     }
                   }
 
-                  saveDataStringList("teams", []);
+                  saveDataStringList("matchteams", []);
                 },
                 child: Text(
                   "Clear All Data",
