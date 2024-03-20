@@ -135,7 +135,7 @@ class _MatchScoutingPageState extends State<MatchScoutingPage> {
                   
 
                    List<String>? tempTeamList =
-                      await readDataStringList("teams");
+                      await readDataStringList("matchteams");
 
                   if (tempTeamList != null) {
                     for(int i = 0; i < tempTeamList.length; i++){

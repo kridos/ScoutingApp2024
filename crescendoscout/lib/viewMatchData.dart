@@ -19,7 +19,7 @@ class _ViewMatchDataState extends State<ViewMatchData> {
 
   void _fetchDataFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    final storedList = prefs.getStringList('teams');
+    final storedList = prefs.getStringList('matchteams');
     if (storedList != null) {
       setState(() {
         myList = storedList;

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'dart:developer';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -10,42 +12,28 @@ class AddMatchData extends StatefulWidget {
   State<AddMatchData> createState() => _AddMatchDataState();
 }
 
-//Robot Team Number - DONE
-//Robot Team Name - DONE
-//Where do they intake from (Ground -> Both, Source only)? - DONE
-//Where can their robot outtake (Amp, Speaker, Both)? - DONE
-//How many notes do they score in teleOp? - DONE
-//Preferred Auto Starting Position - DONE
-//Where do they score in Auto (Speaker, Amp, Both)? - DONE
-//What is the max amount of notes they can score in the amp in auto? - DONE
-//What is the max amount of notes they can score in the speaker in auto? - DONE
-//Type of play (Offensive/Defensive)? - DONE
-//Where do they score in teleOp primarily? - DONE
-//Where do they prefer their human player to be (Amp -> spotlighting experience, Source, Either) - DONE
-//Can they Climb? - DONE
-//Approx amt of time needed to climb (for adjusting their bot at stage and actually climbing)? - DONE
-//Can they harmonize?
-//Can they score trap?
+
 
 class _AddMatchDataState extends State<AddMatchData> {
   //Need to actually get data from the textformfield inputs and store it
-  TextEditingController teamNumberController = TextEditingController();
-  TextEditingController teamNameController = TextEditingController();
+  TextEditingController qualificationNumber = TextEditingController();
+  TextEditingController team1NumberController = TextEditingController();
+  TextEditingController team2NumberController = TextEditingController();
+  TextEditingController team3NumberController = TextEditingController();
   TextEditingController autoAmpNotes = TextEditingController();
   TextEditingController autoSpeakerNotes = TextEditingController();
-  TextEditingController teleOpScoredNotes = TextEditingController();
-  TextEditingController approxClimbTime = TextEditingController();
-
-  String intake = "Source Only";
-  String outtake = "Amp";
-  String autoPrefStart = "Close to Amp";
-  String outtakeAuto = "Amp";
-  String typeOfStrat = "Offensive";
-  String primaryTeleOpScoreLocation = "Amp";
-  String whereHumanPlayer = "Amp";
-  String canClimb = "Yes";
-  String canHarmonize = "Yes";
-  String canTrap = "Yes";
+  TextEditingController teleopAmpNotes = TextEditingController();
+  TextEditingController teleopSpeakerNotes = TextEditingController();
+  
+  String allianceColor = "Red";
+  String trapped = "false";
+  String team1Harmonize = "false";
+  String team2Harmonize = "false";
+  String team3Harmonize = "false";
+  String team1Climb = "false";
+  String team2Climb = "false";
+  String team3Climb = "false";
+  
 
   Future<void> saveDataString(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
@@ -66,7 +54,31 @@ class _AddMatchDataState extends State<AddMatchData> {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getStringList(key);
   }
-// team1 team2 team3 ampAuto SpeakerAuto AmpTele SpeakerTele DidTrap(Boolean, true if there was one in the match) team1harmonize team2harmonize team3harmonize(all boolean, only yes if 2nd robot on chain) didClimb1 didClimb2 didClimb3(Boolean)
+  void _incrementValue(TextEditingController cont) {
+    int currentValue = int.tryParse(cont.text) ?? 0;
+    cont.text = (currentValue + 1).toString();
+  }
+
+  void _decrementValue(TextEditingController cont) {
+    int currentValue = int.tryParse(cont.text) ?? 0;
+    if (currentValue > 0) {
+      cont.text = (currentValue - 1).toString();
+    }
+  }
+// team1 DONE
+// team2 DONE
+// team3 DONE
+// ampAuto DONE
+//SpeakerAuto DONE
+// AmpTele DONE
+// SpeakerTele DONE
+// DidTrap(Boolean, true if there was one in the match) DONE
+//team1harmonize Done
+//team2harmonize Done
+//team3harmonize(all boolean, only yes if 2nd robot on chain) Need to do this parantheses part other wise DONE
+//didClimb1 Done
+//didClimb2 Done
+//didClimb3(Boolean) Done
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,8 +87,47 @@ class _AddMatchDataState extends State<AddMatchData> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+                //Intaking
+              Text("Scouting Red or Blue Alliance?"),
+              Row(
+                
+                children: [
+                  Radio(
+                    value: "Red",
+                    groupValue: allianceColor, // Assign the string value here
+                    onChanged: (value) => setState(() => allianceColor = value ?? ""),
+                  ),
+                  Text('Red'),
+                ],
+              ),
+
+              Row(
+                
+                children: [
+                  Radio(
+                    value: "Blue",
+                    groupValue: allianceColor, // Assign the string value here
+                    onChanged: (value) => setState(() => allianceColor = value ?? ""),
+                  ),
+                  Text('Blue'),
+                ],
+              ),
               //Team Number
-              Text("Robot Team Number"),
+              Text("Qualification Match Number"),
+              TextFormField(
+                maxLength: 2,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Qualification Match Number',
+                ),
+                controller: qualificationNumber,
+              ),
+              //Team Number
+              Text("Team 1 number"),
               TextFormField(
                 maxLength: 5,
                 keyboardType: TextInputType.number,
@@ -87,152 +138,41 @@ class _AddMatchDataState extends State<AddMatchData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Enter the Team Number',
                 ),
-                controller: teamNumberController,
+                controller: team1NumberController,
               ),
-
-              //Team Name
-              Text("Robot Team Name"),
+               //Team Number
+              Text("Team 2 number"),
               TextFormField(
+                maxLength: 5,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
-                  labelText: 'Enter the Team Name',
+                  labelText: 'Enter the Team Number',
                 ),
-                controller: teamNameController,
+                controller: team2NumberController,
               ),
-
-              //Intaking
-              Text("Where do they intake from?"),
-              Row(
-                children: [
-                  Radio(
-                    value: "Source Only",
-                    groupValue: intake, // Assign the string value here
-                    onChanged: (value) => setState(() => intake = value ?? ""),
-                  ),
-                  Text('Source Only'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Ground (Source and Ground)",
-                    groupValue: intake, // Assign the string value here
-                    onChanged: (value) => setState(() => intake = value ?? ""),
-                  ),
-                  Text('Ground (Source and Ground)'),
-                ],
-              ),
-
-              //Outtaking
-              Text("Where can their robot outtake?"),
-              Row(
-                children: [
-                  Radio(
-                    value: "Amp",
-                    groupValue: outtake, // Assign the string value here
-                    onChanged: (value) => setState(() => outtake = value ?? ""),
-                  ),
-                  Text('Amp'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Speaker",
-                    groupValue: outtake, // Assign the string value here
-                    onChanged: (value) => setState(() => outtake = value ?? ""),
-                  ),
-                  Text('Speaker'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Both (Speaker and Amp)",
-                    groupValue: outtake, // Assign the string value here
-                    onChanged: (value) => setState(() => outtake = value ?? ""),
-                  ),
-                  Text('Both (Speaker and Amp)'),
-                ],
-              ),
-
-              //Preferred Auto Start Position
-              Text("Where do they prefer to start in Auto?"),
-              Row(
-                children: [
-                  Radio(
-                    value: "Close to Amp",
-                    groupValue: autoPrefStart, // Assign the string value here
-                    onChanged: (value) => setState(() => autoPrefStart = value ?? ""),
-                  ),
-                  Text('Close to Amp'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "In front of speaker",
-                    groupValue: autoPrefStart, // Assign the string value here
-                    onChanged: (value) => setState(() => autoPrefStart = value ?? ""),
-                  ),
-                  Text('In front of speaker'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Away from the Amp",
-                    groupValue: autoPrefStart, // Assign the string value here
-                    onChanged: (value) => setState(() => autoPrefStart = value ?? ""),
-                  ),
-                  Text('Away from the Amp'),
-                ],
-              ),
-
-              //Where scoring in Auto
-              Text("Where can they score in Auto?"),
-              Row(
-                children: [
-                  Radio(
-                    value: "Amp",
-                    groupValue: outtakeAuto, // Assign the string value here
-                    onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
-                  ),
-                  Text('Amp'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Speaker",
-                    groupValue: outtakeAuto, // Assign the string value here
-                    onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
-                  ),
-                  Text('Speaker'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Both (Speaker and Amp)",
-                    groupValue: outtakeAuto, // Assign the string value here
-                    onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
-                  ),
-                  Text('Both (Speaker and Amp)'),
-                ],
-              ),
-
-              //Max Auto Notes in Amp
-              Text(
-                  "What is the maximum amount of notes they can score in the Amp in Auto?"),
+               //Team Number
+              Text("Team 3 number"),
               TextFormField(
+                maxLength: 5,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Enter the Team Number',
+                ),
+                controller: team3NumberController,
+              ),
+
+              
+              //Intaking
+              Text("How many Auto notes scored in Amp"),
+             TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -240,15 +180,36 @@ class _AddMatchDataState extends State<AddMatchData> {
                 ],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
-                  labelText: 'Amp Notes in Auto',
+                  labelText: 'Number of Amp Auto Notes',
                 ),
                 controller: autoAmpNotes,
               ),
-
-              //Max Auto Notes in Speaker
-              Text(
-                  "What is the maximum amount of notes they can score in the Speaker in Auto?"),
-              TextFormField(
+              Row(
+                
+                children: [
+                  TextButton(
+                    onPressed: () => _decrementValue(autoAmpNotes),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                      textStyle: TextStyle(color: Colors.green),
+                    ),
+                    child: Text("-"),
+                  ),
+                  SizedBox(width: 10), // Add spacing between buttons
+                  TextButton(
+                    onPressed: () => _incrementValue(autoAmpNotes),
+                    style: TextButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                    textStyle: TextStyle(color: Colors.green),
+      
+                  ),
+                    child: Text("+"),
+                  ),
+                ],
+              ),
+                //Intaking
+              Text("How many Auto notes scored in Speaker"),
+             TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -256,74 +217,37 @@ class _AddMatchDataState extends State<AddMatchData> {
                 ],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
-                  labelText: 'Speaker Notes in Auto',
+                  labelText: 'Number of Speaker Auto Notes',
                 ),
                 controller: autoSpeakerNotes,
               ),
-
-              //Offensive or Defensive Play
-              Text(
-                  "What type of strategy do they generally use (Offensive/Defensive)?"),
               Row(
+                
                 children: [
-                  Radio(
-                    value: "Offensive",
-                    groupValue: typeOfStrat, // Assign the string value here
-                    onChanged: (value) => setState(() => typeOfStrat = value ?? ""),
+                  TextButton(
+                    onPressed: () => _decrementValue(autoSpeakerNotes),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                      textStyle: TextStyle(color: Colors.green),
+                    ),
+                    child: Text("-"),
                   ),
-                  Text('Offensive'),
+                  SizedBox(width: 10), // Add spacing between buttons
+                  TextButton(
+                    onPressed: () => _incrementValue(autoSpeakerNotes),
+                    style: TextButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                    textStyle: TextStyle(color: Colors.green),
+      
+                  ),
+                    child: Text("+"),
+                  ),
                 ],
               ),
 
-              Row(
-                children: [
-                  Radio(
-                    value: "Defensive",
-                    groupValue: typeOfStrat, // Assign the string value here
-                    onChanged: (value) => setState(() => typeOfStrat = value ?? ""),
-                  ),
-                  Text('Defensive'),
-                ],
-              ),
-
-              //Primary TeleOp Scoring (not where can they score, but where do they mostly score)
-              Text("Where do they score in TeleOp primarily?"),
-              Row(
-                children: [
-                  Radio(
-                    value: "Amp",
-                    groupValue: primaryTeleOpScoreLocation, // Assign the string value here
-                    onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
-                  ),
-                  Text('Amp'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Speaker",
-                    groupValue: primaryTeleOpScoreLocation, // Assign the string value here
-                    onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
-                  ),
-                  Text('Speaker'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Split",
-                    groupValue: primaryTeleOpScoreLocation, // Assign the string value here
-                    onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
-                  ),
-                  Text('Split'),
-                ],
-              ),
-
-              //How many notes on average in TeleOp
-              Text("How many notes can they score in TeleOp on average?"),
-              TextFormField(
+              //Intaking
+              Text("How many Teleop notes scored in Amp"),
+             TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -331,74 +255,36 @@ class _AddMatchDataState extends State<AddMatchData> {
                 ],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
-                  labelText: 'Notes Scored in TeleOp',
+                  labelText: 'Number of Amp Teleop Notes',
                 ),
-                controller: teleOpScoredNotes,
+                controller: teleopAmpNotes,
               ),
-
-              //Where Human Player
-              Text("What is their preferred Human Player Placement?"),
               Row(
+                
                 children: [
-                  Radio(
-                    value: "Amp",
-                    groupValue: whereHumanPlayer, // Assign the string value here
-                    onChanged: (value) => setState(() => whereHumanPlayer = value ?? ""),
+                  TextButton(
+                    onPressed: () => _decrementValue(teleopAmpNotes),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                      textStyle: TextStyle(color: Colors.green),
+                    ),
+                    child: Text("-"),
                   ),
-                  Text('Amp'),
+                  SizedBox(width: 10), // Add spacing between buttons
+                  TextButton(
+                    onPressed: () => _incrementValue(teleopAmpNotes),
+                    style: TextButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                    textStyle: TextStyle(color: Colors.green),
+      
+                  ),
+                    child: Text("+"),
+                  ),
                 ],
               ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Source",
-                    groupValue: whereHumanPlayer, // Assign the string value here
-                    onChanged: (value) => setState(() => whereHumanPlayer = value ?? ""),
-                  ),
-                  Text('Source'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "Any",
-                    groupValue: whereHumanPlayer, // Assign the string value here
-                    onChanged: (value) => setState(() => whereHumanPlayer = value ?? ""),
-                  ),
-                  Text('Any'),
-                ],
-              ),
-
-              //Can Climb
-              Text("Can they climb?"),
-              Row(
-                children: [
-                  Radio(
-                    value: "Yes",
-                    groupValue: canClimb, // Assign the string value here
-                    onChanged: (value) => setState(() => canClimb = value ?? ""),
-                  ),
-                  Text('Yes'),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Radio(
-                    value: "No",
-                    groupValue: canClimb, // Assign the string value here
-                    onChanged: (value) => setState(() => canClimb = value ?? ""),
-                  ),
-                  Text('No'),
-                ],
-              ),
-
-              //Approx Climb Time
-              Text(
-                  "What is the approximate amount of time it takes them to climb (if they can climb)?"),
-              TextFormField(
+                //Intaking
+              Text("How many Teleop notes scored in Speaker"),
+             TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -406,115 +292,249 @@ class _AddMatchDataState extends State<AddMatchData> {
                 ],
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
-                  labelText: 'Approx Climb Time',
+                  labelText: 'Number of Speaker Teleop Notes',
                 ),
-                controller: approxClimbTime,
+                controller: teleopSpeakerNotes,
               ),
-
-              //Can Harmonize
-              Text("Can they Harmonize?"),
               Row(
+                
                 children: [
-                  Radio(
-                    value: "Yes",
-                    groupValue: canHarmonize, // Assign the string value here
-                    onChanged: (value) => setState(() => canHarmonize = value ?? ""),
+                  TextButton(
+                    onPressed: () => _decrementValue(teleopSpeakerNotes),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                      textStyle: TextStyle(color: Colors.green),
+                    ),
+                    child: Text("-"),
                   ),
-                  Text('Yes'),
+                  SizedBox(width: 10), // Add spacing between buttons
+                  TextButton(
+                    onPressed: () => _incrementValue(teleopSpeakerNotes),
+                    style: TextButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 162, 213, 255), // Set button color
+                    textStyle: TextStyle(color: Colors.green),
+      
+                  ),
+                    child: Text("+"),
+                  ),
                 ],
               ),
 
+              //Trapping
+              Text("Trapping Ability"),
               Row(
+                
                 children: [
                   Radio(
-                    value: "No",
-                    groupValue: canHarmonize, // Assign the string value here
-                    onChanged: (value) => setState(() => canHarmonize = value ?? ""),
+                    
+                    value: "True",
+                    groupValue: trapped, // Assign the string value here
+                    onChanged: (value) => setState(() => trapped = value ?? ""),
+                    
                   ),
-                  Text('No'),
+                  Text('True'),
+                  
+                  
+                ],
+                
+              ),
+              
+
+              Row(
+                
+                children: [
+                  Radio(
+                    value: "False",
+                    groupValue: trapped, // Assign the string value here
+                    onChanged: (value) => setState(() => trapped = value ?? ""),
+                  ),
+                  Text('False'),
                 ],
               ),
 
-              //Can Score Trap
-              Text("Can they Score Trap?"),
+              //Harmonizing
+              Text("Harmonizing(>1 robot on a single chain)"),
               Row(
+
                 children: [
+                  Text("Team1 ${team1NumberController.text}"),
                   Radio(
-                    value: "Yes",
-                    groupValue: canTrap, // Assign the string value here
-                    onChanged: (value) => setState(() => canTrap = value ?? ""),
+                    value: "True",
+                    groupValue: team1Harmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => team1Harmonize = value ?? ""),
                   ),
-                  Text('Yes'),
+                  Text("True"),
+                  Radio(
+                    value: "False",
+                    groupValue: team1Harmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => team1Harmonize = value ?? ""),
+                  ),
+                  Text("False"),
+                  
+                ],
+              ),
+               Row(
+
+                children: [
+                  Text("Team2 ${team2NumberController.text}"),
+                  Radio(
+                    value: "True",
+                    groupValue: team2Harmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => team2Harmonize = value ?? ""),
+                  ),
+                  Text("True"),
+                  Radio(
+                    value: "False",
+                    groupValue: team2Harmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => team2Harmonize = value ?? ""),
+                  ),
+                  Text("False"),
+                  
+                ],
+              ),
+               Row(
+
+                children: [
+                  Text("Team3 ${team3NumberController.text}"),
+                  Radio(
+                    value: "True",
+                    groupValue: team3Harmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => (team3Harmonize = value ?? "")),
+                  ),
+                  Text("True"),
+                  Radio(
+                    value: "False",
+                    groupValue: team3Harmonize, // Assign the string value here
+                    onChanged: (value) => setState(() => team3Harmonize = value ?? ""),
+                  ),
+                  Text("False"),
+                  
                 ],
               ),
 
+              //Climbing
+              Text("Did the Robots climb"),
               Row(
+
                 children: [
+                  Text("Team1 ${team1NumberController.text}"),
                   Radio(
-                    value: "No",
-                    groupValue: canTrap, // Assign the string value here
-                    onChanged: (value) => setState(() => canTrap = value ?? ""),
+                    value: "True",
+                    groupValue: team1Climb, // Assign the string value here
+                    onChanged: (value) => setState(() => team1Climb = value ?? ""),
                   ),
-                  Text('No'),
+                  Text("True"),
+                  Radio(
+                    value: "False",
+                    groupValue: team1Climb, // Assign the string value here
+                    onChanged: (value) => setState(() => team1Climb = value ?? ""),
+                  ),
+                  Text("False"),
+                  
                 ],
               ),
+               Row(
+
+                children: [
+                  Text("Team2 ${team2NumberController.text}"),
+                  Radio(
+                    value: "True",
+                    groupValue: team2Climb, // Assign the string value here
+                    onChanged: (value) => setState(() => team2Climb = value ?? ""),
+                  ),
+                  Text("True"),
+                  Radio(
+                    value: "False",
+                    groupValue: team2Climb, // Assign the string value here
+                    onChanged: (value) => setState(() => team2Climb = value ?? ""),
+                  ),
+                  Text("False"),
+                  
+                ],
+              ),
+               Row(
+
+                children: [
+                  Text("Team3 ${team3NumberController.text}"),
+                  Radio(
+                    value: "True",
+                    groupValue: team3Climb, // Assign the string value here
+                    onChanged: (value) => setState(() => team3Climb = value ?? ""),
+                  ),
+                  Text("True"),
+                  Radio(
+                    value: "False",
+                    groupValue: team3Climb, // Assign the string value here
+                    onChanged: (value) => setState(() => team3Climb = value ?? ""),
+                  ),
+                  Text("False"),
+                  
+                ],
+              ),
+
 
               ElevatedButton(
                 onPressed: () async {
                   List<String>? tempTeamList =
-                      await readDataStringList("teams");
+                      await readDataStringList("matchteams");
 
                   if (tempTeamList != null) {
-                    tempTeamList.add(teamNumberController.text);
-                    saveDataStringList("teams", tempTeamList);
+                    tempTeamList.add(qualificationNumber.text);
+                    saveDataStringList("matchteams", tempTeamList);
                   } else {
-                    List<String> teamList = [teamNumberController.text];
-                    saveDataStringList("teams", teamList);
+                    List<String> teamList = [qualificationNumber.text];
+                    saveDataStringList("matchteams", teamList);
                     // Handle the case where data retrieval failed (e.g., print an error message)
                     log("Returned Null");
                   }
 
-                  String autoAmpNotesText = autoAmpNotes.text;
-                  String autoSpeakerNotesText = autoSpeakerNotes.text;
-                  String teleOpScoredNotesText = teleOpScoredNotes.text;
-                  String approxClimbTimeText = approxClimbTime.text;
+                  String team1NumController = team1NumberController.text;
+                  String team2NumController = team2NumberController.text;
+                  String team3NumController = team3NumberController.text;
+                  String autoAmpNote = autoAmpNotes.text;
+                  String autoSpeakerNote = autoSpeakerNotes.text;
+                  String teleopAmpNote = teleopAmpNotes.text;
+                  String teleopSpeakerNote = teleopSpeakerNotes.text;
 
-                  if(autoAmpNotesText == ""){
-                    autoAmpNotesText = "0";
+                  if(team1NumController == ""){
+                    team1NumController = "0";
                   }
-
-                  if(autoSpeakerNotesText == ""){
-                    autoSpeakerNotesText = "0";
+                  if(team2NumController == ""){
+                    team2NumController = "0";
                   }
-
-                  if(teleOpScoredNotesText == ""){
-                    teleOpScoredNotesText = "0";
+                  if(team3NumController == ""){
+                    team3NumController = "0";
                   }
-
-                  if(approxClimbTimeText == ""){
-                    approxClimbTimeText = "N/A";
+                  if(autoAmpNote == ""){
+                    autoAmpNote = "0";
                   }
-
+                  if(autoSpeakerNote == ""){
+                    autoSpeakerNote = "0";
+                  }
+                  if(teleopAmpNote == ""){
+                    teleopAmpNote = "0";
+                  }
+                  if(teleopSpeakerNote == ""){
+                    teleopSpeakerNote = "0";
+                  }
                   List<String> teamStats = [
-                    teamNumberController.text,
-                    teamNameController.text,
-                    intake,
-                    outtake,
-                    autoPrefStart,
-                    outtakeAuto,
-                    autoAmpNotesText,
-                    autoSpeakerNotesText,
-                    typeOfStrat,
-                    primaryTeleOpScoreLocation,
-                    teleOpScoredNotesText,
-                    whereHumanPlayer,
-                    canClimb,
-                    approxClimbTimeText,
-                    canHarmonize,
-                    canTrap
+                    team1NumController,
+                    team2NumController,
+                    team3NumController,
+                    autoAmpNote,
+                    autoSpeakerNote,
+                    teleopAmpNote,
+                    teleopSpeakerNote,
+                    trapped,
+                    team1Harmonize,
+                    team2Harmonize,
+                    team3Harmonize,
+                    team1Climb,
+                    team2Climb,
+                    team3Climb
                   ];
                   log(teamStats.toString());
-                  saveDataStringList(teamNumberController.text, teamStats);
+                  saveDataStringList("Qualification ${qualificationNumber.text}", teamStats);
 
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context);
@@ -524,5 +544,6 @@ class _AddMatchDataState extends State<AddMatchData> {
             ],
           ),
         ));
+        
   }
 }
