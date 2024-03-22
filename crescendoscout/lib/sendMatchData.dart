@@ -15,7 +15,7 @@ class _SendMatchDataState extends State<SendMatchData> {
   bool showQrCode = false;
   bool isLoaded = false;
   QrCode qrCode =
-      QrCode(4, QrErrorCorrectLevel.L); // Initialize with default data
+  QrCode(4, QrErrorCorrectLevel.L); // Initialize with default data
 
   List<String> myList = []; // Initialize an empty list
 
@@ -28,11 +28,14 @@ class _SendMatchDataState extends State<SendMatchData> {
   void _fetchDataFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final storedList = prefs.getStringList('matchteams');
+    log("ACcedcsing data ${storedList.toString()}");
     if (storedList != null) {
       setState(() {
         myList = storedList;
         isLoaded = true;
       });
+    }else{
+      log("null fetDataFromSharedPreferences");
     }
   }
 
@@ -49,6 +52,7 @@ class _SendMatchDataState extends State<SendMatchData> {
                       onChanged: (value) {
                         setState(() {
                           selectedItem = value.toString();
+                          log(value.toString());
                         });
                       },
                     )

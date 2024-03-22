@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:developer';
@@ -123,6 +124,16 @@ class _AddDataState extends State<AddData> {
                   Text('Ground (Source and Ground)'),
                 ],
               ),
+               Row(
+                children: [
+                  Radio(
+                    value: "Neither",
+                    groupValue: intake, // Assign the string value here
+                    onChanged: (value) => setState(() => intake = value ?? ""),
+                  ),
+                  Text('Neither'),
+                ],
+              ),
 
               //Outtaking
               Text("Where can their robot outtake?"),
@@ -156,6 +167,16 @@ class _AddDataState extends State<AddData> {
                     onChanged: (value) => setState(() => outtake = value ?? ""),
                   ),
                   Text('Both (Speaker and Amp)'),
+                ],
+              ),
+               Row(
+                children: [
+                  Radio(
+                    value: "None",
+                    groupValue: outtake, // Assign the string value here
+                    onChanged: (value) => setState(() => outtake = value ?? ""),
+                  ),
+                  Text('None'),
                 ],
               ),
 
@@ -228,7 +249,16 @@ class _AddDataState extends State<AddData> {
                   Text('Both (Speaker and Amp)'),
                 ],
               ),
-
+               Row(
+                children: [
+                  Radio(
+                    value: "None",
+                    groupValue: outtakeAuto, // Assign the string value here
+                    onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
+                  ),
+                  Text('None'),
+                ],
+              ),
               //Max Auto Notes in Amp
               Text(
                   "What is the maximum amount of notes they can score in the Amp in Auto?"),
@@ -318,6 +348,16 @@ class _AddDataState extends State<AddData> {
                     onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
                   ),
                   Text('Split'),
+                ],
+              ),
+                Row(
+                children: [
+                  Radio(
+                    value: "None",
+                    groupValue: primaryTeleOpScoreLocation, // Assign the string value here
+                    onChanged: (value) => setState(() => primaryTeleOpScoreLocation = value ?? ""),
+                  ),
+                  Text('None'),
                 ],
               ),
 
