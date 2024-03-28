@@ -123,34 +123,53 @@ class _MatchScoutingPageState extends State<MatchScoutingPage> {
               ),
             ),
             Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.blue, // Grey when not pressed
-              ),
-              child: TextButton(
-                onPressed: () async {
-                  
+  width: 100,
+  height: 100,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(5),
+    color: Colors.blue, // Grey when not pressed
+  ),
+  child: TextButton(
+    onPressed: () async {
+      // Show confirmation dialog
+      final confirmed = await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Clear All Data'),
+          content: const Text('Are you sure you want to clear all saved match data? This action cannot be undone.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false), // Cancel
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true), // Confirm
+              child: const Text('Clear'),
+            ),
+          ],
+        ),
+      );
 
-                   List<String>? tempTeamList =
-                      await readDataStringList("matchteams");
+      // Clear data only if confirmed
+      if (confirmed ?? false) {
+        List<String>? tempTeamList = await readDataStringList("matchteams");
 
-                  if (tempTeamList != null) {
-                    for(int i = 0; i < tempTeamList.length; i++){
-                      removeSpecificData(tempTeamList[i]);
-                    }
-                  }
+        if (tempTeamList != null) {
+          for (int i = 0; i < tempTeamList.length; i++) {
+            removeSpecificData(tempTeamList[i]);
+          }
+        }
 
-                  saveDataStringList("matchteams", []);
-                },
-                child: Text(
-                  "Clear All Data",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            )
+        saveDataStringList("matchteams", []);
+      }
+    },
+    child: Text(
+      "Clear All Data",
+      textAlign: TextAlign.center,
+      style: const TextStyle(color: Colors.white),
+    ),
+  ),
+),
           ],
         ),
       ]),

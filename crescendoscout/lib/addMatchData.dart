@@ -173,7 +173,7 @@ class _AddMatchDataState extends State<AddMatchData> {
 
               
               //Intaking
-              Text("How many Auto notes scored in Amp"),
+              Text("Amp Auto Notes"),
              TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
@@ -210,7 +210,7 @@ class _AddMatchDataState extends State<AddMatchData> {
                 ],
               ),
                 //Intaking
-              Text("How many Auto notes scored in Speaker"),
+              Text("Speaker Auto Notes"),
              TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
@@ -256,7 +256,7 @@ class _AddMatchDataState extends State<AddMatchData> {
                 controller: extraAutoInfo,
               ),
               //Intaking
-              Text("How many Teleop notes scored in Amp"),
+              Text("Amp TeleOp Notes"),
              TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
@@ -293,7 +293,7 @@ class _AddMatchDataState extends State<AddMatchData> {
                 ],
               ),
                 //Intaking
-              Text("How many Teleop notes scored in Speaker"),
+              Text("Speaker TeleOp Notes"),
              TextFormField(
                 maxLength: 2,
                 keyboardType: TextInputType.number,
