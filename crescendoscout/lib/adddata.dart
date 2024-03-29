@@ -282,7 +282,7 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Amp Notes in Auto',
                 ),
-                controller: autoAmpNotes = TextEditingController(text:(outtakeAuto == "Speaker" || outtakeAuto == "None" || outtakeAuto != "Both") ? "0" : ((int.parse(autoAmpNotes.text) > 0) ? autoAmpNotes.text : "") ),
+                controller: autoAmpNotes,
 
               ),
 
@@ -299,7 +299,7 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Speaker Notes in Auto',
                 ),
-                controller: autoSpeakerNotes = TextEditingController(text:(outtakeAuto == "Amp" || outtakeAuto == "None" || outtakeAuto != "Both") ? "0" : ((int.parse(autoSpeakerNotes.text) > 0) ? autoSpeakerNotes.text : "") ),
+                controller: autoSpeakerNotes,
               ),
 
               //Offensive or Defensive Play
@@ -428,7 +428,7 @@ class _AddDataState extends State<AddData> {
                 children: [
                   Radio(
                     value: "Yes",
-                    groupValue: canClimb = (canTrap == "true" || canHarmonize == "true") ? "true" : "false", // Assign the string value here
+                    groupValue: canClimb, // Assign the string value here
                     onChanged: (value) => setState(() => canClimb = value ?? ""),
                   ),
                   Text('Yes'),
@@ -439,7 +439,7 @@ class _AddDataState extends State<AddData> {
                 children: [
                   Radio(
                     value: "No",
-                    groupValue: canClimb = (canTrap == "true" || canHarmonize == "true") ? "true" : "false", // Assign the string value here
+                    groupValue: canClimb, // Assign the string value here
                     onChanged: (value) => setState(() => canClimb = value ?? ""),
                   ),
                   Text('No'),
