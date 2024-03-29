@@ -32,7 +32,7 @@ class _AddDataState extends State<AddData> {
   //Need to actually get data from the textformfield inputs and store it
   TextEditingController teamNumberController = TextEditingController();
   TextEditingController teamNameController = TextEditingController();
-  TextEditingController autoAmpNotes = TextEditingController();
+  TextEditingController autoAmpNotes =  TextEditingController();
   TextEditingController autoSpeakerNotes = TextEditingController();
   TextEditingController teleOpScoredNotes = TextEditingController();
   TextEditingController approxClimbTime = TextEditingController();
@@ -102,7 +102,7 @@ class _AddDataState extends State<AddData> {
               ),
 
               //Intaking
-              Text("Where do they intake from?"),
+              Text("location on the field they intake the note"),
               Row(
                 children: [
                   Radio(
@@ -136,7 +136,7 @@ class _AddDataState extends State<AddData> {
               ),
 
               //Outtaking
-              Text("Where can their robot outtake?"),
+              Text("Where can their robot shoot the note?"),
               Row(
                 children: [
                   Radio(
@@ -214,6 +214,16 @@ class _AddDataState extends State<AddData> {
                   Text('Away from the Amp'),
                 ],
               ),
+              Row(
+                children: [
+                  Radio(
+                    value: "Anywhere",
+                    groupValue: autoPrefStart, // Assign the string value here
+                    onChanged: (value) => setState(() => autoPrefStart = value ?? ""),
+                  ),
+                  Text('Anywhere'),
+                ],
+              ),
 
               //Where scoring in Auto
               Text("Where can they score in Auto?"),
@@ -242,11 +252,11 @@ class _AddDataState extends State<AddData> {
               Row(
                 children: [
                   Radio(
-                    value: "Both (Speaker and Amp)",
+                    value: "Both",
                     groupValue: outtakeAuto, // Assign the string value here
                     onChanged: (value) => setState(() => outtakeAuto = value ?? ""),
                   ),
-                  Text('Both (Speaker and Amp)'),
+                  Text('Both'),
                 ],
               ),
                Row(
@@ -272,7 +282,8 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Amp Notes in Auto',
                 ),
-                controller: autoAmpNotes,
+                controller: autoAmpNotes = TextEditingController(text:(outtakeAuto == "Speaker" || outtakeAuto == "None" || outtakeAuto != "Both") ? "0" : ((int.parse(autoAmpNotes.text) > 0) ? autoAmpNotes.text : "") ),
+
               ),
 
               //Max Auto Notes in Speaker
@@ -288,7 +299,7 @@ class _AddDataState extends State<AddData> {
                   border: UnderlineInputBorder(),
                   labelText: 'Speaker Notes in Auto',
                 ),
-                controller: autoSpeakerNotes,
+                controller: autoSpeakerNotes = TextEditingController(text:(outtakeAuto == "Amp" || outtakeAuto == "None" || outtakeAuto != "Both") ? "0" : ((int.parse(autoSpeakerNotes.text) > 0) ? autoSpeakerNotes.text : "") ),
               ),
 
               //Offensive or Defensive Play
@@ -417,7 +428,7 @@ class _AddDataState extends State<AddData> {
                 children: [
                   Radio(
                     value: "Yes",
-                    groupValue: canClimb, // Assign the string value here
+                    groupValue: canClimb = (canTrap == "true" || canHarmonize == "true") ? "true" : "false", // Assign the string value here
                     onChanged: (value) => setState(() => canClimb = value ?? ""),
                   ),
                   Text('Yes'),
@@ -428,7 +439,7 @@ class _AddDataState extends State<AddData> {
                 children: [
                   Radio(
                     value: "No",
-                    groupValue: canClimb, // Assign the string value here
+                    groupValue: canClimb = (canTrap == "true" || canHarmonize == "true") ? "true" : "false", // Assign the string value here
                     onChanged: (value) => setState(() => canClimb = value ?? ""),
                   ),
                   Text('No'),
