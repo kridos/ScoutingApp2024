@@ -24,31 +24,33 @@ class _ViewDataState extends State<ViewData> {
       setState(() {
         myList = storedList;
         isLoaded = true;
+
       });
+              log("Plze worl" + storedList.toString());
+
     }else{
       log("BEEELLLOOOWWW");
     }
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(),
       body: isLoaded
           ? Container(
-              child: ListView.builder(
-              itemCount: myList.length,
-              itemBuilder: (context, index) {
-                final String item = myList[index];
-                return ListTile(
-                  title: Text(item),
-                );
-              },
-            ))
-          : Center(child: CircularProgressIndicator()),
-
-      //body: ListView(),
+              child: ListView(
+                children: myList
+                    .map(
+                      (item) => ListTile(
+                        title: Text(item),
+                      ),
+                    )
+                    .toList(),
+              ),
+            )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }
