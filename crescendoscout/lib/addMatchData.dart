@@ -117,7 +117,7 @@ class _AddMatchDataState extends State<AddMatchData> {
               //Team Number
               Text("Qualification Match Number"),
               TextFormField(
-                maxLength: 2,
+                maxLength: 3,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
